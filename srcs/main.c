@@ -19,11 +19,23 @@ int	main(int argc, char *argv[])
 	t_resources rs;
 	printf("%d\n", validate_user_input(argc, argv));
 	parse_input(&x, argv);
+	mem_alloc(&rs);
+	
 
 	return (0);
 }
 
+mutex_init(pthread_mutex_t *forks, long num_philos)
+{
+	long	i;
 
+	i = 0;
+	while (i < num_philos)
+	{
+		pthread_mutex_init(&forks[i], NULL);
+		i++;
+	}
+}
 
 void	mem_alloc(t_resources *rs, t_input x)
 {
