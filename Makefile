@@ -8,6 +8,7 @@ CFLAGS = -g -Wall -Wextra -Werror -I$(INCL_DIR)
 SRCS = main \
 		validate_user_input \
 		validate_value_range \
+		philo_state \
 
 SRCS := $(addprefix $(SRCS_DIR)/, $(addsuffix .c, $(SRCS)))
 OBJS = $(SRCS:.c=.o)
@@ -22,6 +23,5 @@ clean:
  
 fclean: clean
 	rm -rf $(NAME)
-	make -C $(LIBFT_DIR) fclean
 
 re: fclean all
