@@ -6,7 +6,7 @@
 /*   By: dongjle2 <dongjle2@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:17:41 by dongjle2          #+#    #+#             */
-/*   Updated: 2024/10/29 23:46:09 by dongjle2         ###   ########.fr       */
+/*   Updated: 2024/10/31 01:36:38 by dongjle2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	validate_each_argv(char *arg)
 			return False;
 		i++;
 	}
-	return True;
+	return (True);
 }
 
 int	validate_argv(char *argv[])

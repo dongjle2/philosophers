@@ -6,30 +6,43 @@
 /*   By: dongjle2 <dongjle2@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:00:20 by dongjle2          #+#    #+#             */
-/*   Updated: 2024/10/30 01:30:06 by dongjle2         ###   ########.fr       */
+/*   Updated: 2024/10/31 23:24:17 by dongjle2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
+#include <sys/time.h>
+#include <unistd.h>
 
 #define False 0
 #define True 1
 
-typedef struct s_input
+typedef struct	s_input
 {
-	long	num_philos;
-	long	ttd;
-	long	tte;
-	long	tts;
-	long	num_each_philo_eats;
+	unsigned long	num_philos;
+	unsigned long	ttd;
+	unsigned long	tte;
+	unsigned long	tts;
+	unsigned long	num_each_philo_eats;
 }				t_input;
 
-typedef struct s_resources
+typedef struct	s_philos
 {
-	pthread_t		*philos;
+	size_t			num;
+	pthread_mutex_t	forks[2];
+	pthread_mutex_t	print;
+	t_input			*input;
+}				t_philos;
+
+typedef struct	s_resources
+{
+	pthread_t		*thread;
+	t_philos		*philos;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t	print;
+	t_input			input;
 }				t_resources;
 
 //validate_user_input.c
@@ -41,4 +54,19 @@ int		ft_isnum(char c);
 
 //validate_value_range.c
 int		validate_value_range(char *argv[]);
-long	ft_atol(char *s);
+unsigned long	ft_atol(char *s);
+
+void	mutex_init(t_resources *rs);
+int		mem_alloc(t_resources *rs);
+void	parse_input(t_input *x, char *argv[]);
+void	*routine(void *arg);
+void	create_threads(t_resources *rs);
+int	validate_input(int argc, char *argv[]);
+long long	current_timestamp_in_milliseconds();
+
+//philo_state.c
+void (*print_log)(void);
+void	eat(t_philos *philo);
+void	ft_sleep(t_philos *philo);
+void	think(t_philos *philo);
+void	print_status(t_philos *philo, const char *status);
