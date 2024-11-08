@@ -9,6 +9,7 @@ SRCS = main \
 		validate_user_input \
 		validate_value_range \
 		philo_state \
+		sleep \
 
 SRCS := $(addprefix $(SRCS_DIR)/, $(addsuffix .c, $(SRCS)))
 OBJS = $(SRCS:.c=.o)
