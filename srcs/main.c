@@ -6,7 +6,7 @@
 /*   By: dongjle2 <dongjle2@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:00:23 by dongjle2          #+#    #+#             */
-/*   Updated: 2024/11/08 01:03:20 by dongjle2         ###   ########.fr       */
+/*   Updated: 2024/11/08 16:45:07 by dongjle2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	*monitor_routine(void *arg)
 	monitor = (t_monitor_rs *)arg;
 	while (42)
 	{
-		// printf("monitor_rountine\n");
 		pthread_mutex_lock(monitor->death_flag_mutex);
 		if (*monitor->death_flag)
 		{
@@ -54,11 +53,11 @@ void	*monitor_routine(void *arg)
 			return (NULL);
 		}
 		pthread_mutex_unlock(monitor->death_flag_mutex);
-		exit(1);
 		i = 0;
-		printf("%lu\n", monitor->input->num_philos);
+		// printf("%lu\n", monitor->input->num_philos);
 		while (i < monitor->input->num_philos)
 		{
+			// printf("time: %lu %lu\n", monitor->input->ttd, get_time_in_ms() - monitor->philos[i].last_meal_time);
 			if ((long)monitor->input->ttd > get_time_in_ms() - monitor->philos[i].last_meal_time)
 			{
 				print_status(&monitor->philos[i], "is died");
@@ -86,7 +85,6 @@ void	*routine(void *arg)
 			pthread_mutex_unlock(cur->death_flag_mutex);
 			return (NULL);
 		}
-		// printf("routine\n");
 		pthread_mutex_unlock(cur->death_flag_mutex);
 		
 		pthread_mutex_lock(cur->total_eat_mutex);
@@ -134,6 +132,10 @@ void	create_threads(t_resources *rs, t_monitor_rs *monitor)
 		pthread_create(&rs->thread[i], NULL, routine, &rs->philos[i]);
 		i++;
 	}
+	monitor->death_flag = &rs->death_flag;
+	monitor->death_flag_mutex = &rs->death_flag_mutex;
+	monitor->input = &rs->input;
+	monitor->philos = rs->philos;
 	pthread_create(&monitor->monitor_thread, NULL, monitor_routine, monitor);
 
 }

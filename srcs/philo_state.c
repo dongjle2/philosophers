@@ -6,7 +6,7 @@
 /*   By: dongjle2 <dongjle2@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 23:01:14 by dongjle2          #+#    #+#             */
-/*   Updated: 2024/11/08 01:00:17 by dongjle2         ###   ########.fr       */
+/*   Updated: 2024/11/08 16:45:03 by dongjle2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,19 @@ void	take_forks(t_philos *philo)
 }
 int	eat(t_philos *philo)
 {
+	pthread_mutex_lock(philo->death_flag_mutex);
+	if (*philo->death_flag)
+	{
+		pthread_mutex_unlock(philo->death_flag_mutex);
+		return (False);
+	}
+	pthread_mutex_unlock(philo->death_flag_mutex);
 	take_forks(philo);
 	print_status(philo, "is eating");
 	ft_usleep(philo->input->tte);
 	decrement_total_eat(philo);
 	//update_eat_time();
-	philo->last_meal_time = get_time_in_ms() - philo->last_meal_time;
-	printf("%lu\n", philo->last_meal_time);
+	philo->last_meal_time = get_time_in_ms();
 	pthread_mutex_unlock(philo->forks[0]);
 	pthread_mutex_unlock(philo->forks[1]);
 	return (True);
@@ -90,7 +96,12 @@ void	think(t_philos *philo)
 
 void	print_status(t_philos *philo, const char *status)
 {
-	pthread_mutex_lock(&philo->print);
-	printf("%lu %zu %s\n", get_time_in_ms() - philo->start_time, philo->num, status);
-	pthread_mutex_unlock(&philo->print);
+	pthread_mutex_lock(philo->death_flag_mutex);
+	if (*philo->death_flag == 0)
+	{
+		pthread_mutex_lock(&philo->print);
+		printf("%lu %zu %s\n", get_time_in_ms() - philo->start_time, philo->num, status);
+		pthread_mutex_unlock(&philo->print);
+	}
+	pthread_mutex_unlock(philo->death_flag_mutex);
 }
