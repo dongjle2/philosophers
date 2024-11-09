@@ -6,7 +6,7 @@
 /*   By: dongjle2 <dongjle2@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:17:41 by dongjle2          #+#    #+#             */
-/*   Updated: 2024/10/31 01:36:38 by dongjle2         ###   ########.fr       */
+/*   Updated: 2024/11/09 22:26:51 by dongjle2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,15 @@
 
 int	validate_user_input(int argc, char *argv[])
 {
+	printf("%d\n", validate_argv(argv));
 	return (validate_argc(argc) && validate_argv(argv));
 }
 
 int	validate_argc(int argc)
 {
 	if (argc < 5 || 6 < argc)
-		return (False);
-	return (True);
+		return (FALSE);
+	return (TRUE);
 }
 
 int	validate_each_argv(char *arg)
@@ -32,10 +33,10 @@ int	validate_each_argv(char *arg)
 	while (arg[i])
 	{
 		if (!ft_isnum(arg[i]))
-			return False;
+			return FALSE;
 		i++;
 	}
-	return (True);
+	return (TRUE);
 }
 
 int	validate_argv(char *argv[])
@@ -48,14 +49,14 @@ int	validate_argv(char *argv[])
 		if (validate_each_argv(argv[i]))
 			i++;
 		else
-			return (False);
+			return (FALSE);
 	}
-	return (True);
+	return (TRUE);
 }
 
 int	ft_isnum(char c)
 {
 	if ('0' <= c && c <= '9')
-		return True;
-	return False;
+		return (TRUE);
+	return (FALSE);
 }

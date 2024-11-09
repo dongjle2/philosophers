@@ -6,7 +6,7 @@
 /*   By: dongjle2 <dongjle2@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:00:23 by dongjle2          #+#    #+#             */
-/*   Updated: 2024/11/08 16:45:07 by dongjle2         ###   ########.fr       */
+/*   Updated: 2024/11/09 22:30:50 by dongjle2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	main(int argc, char *argv[])
 	t_resources rs;
 	t_monitor_rs monitor;
 
-	if (validate_user_input(argc, argv) == 0)
+	if (validate_input(argc, argv) == 0)
 	{
 		write(1, "Invalid input\n", 14);
 		return (1);
@@ -41,29 +41,20 @@ int	main(int argc, char *argv[])
 void	*monitor_routine(void *arg)
 {
 	t_monitor_rs	*monitor;
-	size_t		i;
+	size_t			i;
 
 	monitor = (t_monitor_rs *)arg;
 	while (42)
 	{
-		pthread_mutex_lock(monitor->death_flag_mutex);
-		if (*monitor->death_flag)
-		{
-			pthread_mutex_unlock(monitor->death_flag_mutex);
+		if (!ck_death_flag_on(monitor->death_flag_mutex, monitor->death_flag))
 			return (NULL);
-		}
-		pthread_mutex_unlock(monitor->death_flag_mutex);
 		i = 0;
-		// printf("%lu\n", monitor->input->num_philos);
 		while (i < monitor->input->num_philos)
 		{
-			// printf("time: %lu %lu\n", monitor->input->ttd, get_time_in_ms() - monitor->philos[i].last_meal_time);
-			if ((long)monitor->input->ttd > get_time_in_ms() - monitor->philos[i].last_meal_time)
+			if (monitor->input->ttd < get_time_in_ms() - monitor->philos[i].last_meal_time)
 			{
-				print_status(&monitor->philos[i], "is died");
-				pthread_mutex_lock(monitor->death_flag_mutex);
-				*monitor->death_flag = 1;
-				pthread_mutex_unlock(monitor->death_flag_mutex);
+				print_status(&monitor->philos[i], DIE);
+				set_death_flag_on(monitor->death_flag_mutex, monitor->death_flag);
 				return (NULL);
 			}
 			i++;
@@ -76,29 +67,18 @@ void	*routine(void *arg)
 	t_philos	*cur;
 
 	cur = (t_philos *)arg;
-	// usleep(cur->num * 1000);
 	while (42)
 	{
-		pthread_mutex_lock(cur->death_flag_mutex);
-		if (*cur->death_flag)
-		{
-			pthread_mutex_unlock(cur->death_flag_mutex);
-			return (NULL);
-		}
-		pthread_mutex_unlock(cur->death_flag_mutex);
-		
-		pthread_mutex_lock(cur->total_eat_mutex);
-		if (cur->input->total_eat != -1 && cur->input->total_eat == 0)
-		{
-			pthread_mutex_unlock(cur->total_eat_mutex);
-			return (NULL);
-		}
-		pthread_mutex_unlock(cur->total_eat_mutex);
-		if (eat(cur) == False)
-			return (NULL);
+		if (!ck_death_flag_on(cur->death_flag_mutex, cur->death_flag))
+			break ;
+		if (!ck_total_eat_value(cur->total_eat_mutex, &cur->input->total_eat))
+			break ;
+		if (!eat(cur))
+			break ;
 		ft_sleep(cur);
 		think(cur);
 	}
+	return (NULL);
 }
 /*
 void	init_philo_data(t_philos *philos, size_t i)
@@ -137,7 +117,6 @@ void	create_threads(t_resources *rs, t_monitor_rs *monitor)
 	monitor->input = &rs->input;
 	monitor->philos = rs->philos;
 	pthread_create(&monitor->monitor_thread, NULL, monitor_routine, monitor);
-
 }
 
 void	mutex_init(t_resources *rs)
@@ -159,14 +138,14 @@ int	mem_alloc(t_resources *rs)
 {
 	rs->thread = malloc(rs->input.num_philos * sizeof(pthread_t));
 	if (rs->thread == NULL)
-		return (False);
+		return (FALSE);
 	rs->philos = malloc(rs->input.num_philos * sizeof(t_philos));
 	if (rs->philos == NULL)
-		return (False);
+		return (FALSE);
 	rs->forks = malloc(rs->input.num_philos * sizeof(pthread_mutex_t));
 	if (rs->forks == NULL)
-		return (False);
-	return (True);
+		return (FALSE);
+	return (TRUE);
 }
 
 int	validate_input(int argc, char *argv[])
@@ -181,7 +160,7 @@ void	parse_input(t_input *input, char *argv[])
 	input->tte = ft_atol(argv[3]);
 	input->tts = ft_atol(argv[4]);
 	if (argv[5])
-		input->total_eat = ft_atol(argv[5]);
+		input->total_eat = ft_atol(argv[5]) * input->num_philos;
 	else
 		input->total_eat = -1;
 }

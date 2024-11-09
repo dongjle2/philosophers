@@ -6,7 +6,7 @@
 /*   By: dongjle2 <dongjle2@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 00:42:14 by dongjle2          #+#    #+#             */
-/*   Updated: 2024/10/31 01:44:57 by dongjle2         ###   ########.fr       */
+/*   Updated: 2024/11/09 22:13:22 by dongjle2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ int	validate_value_range(char *argv[])
 	{
 		input[i] = atol(argv[i + 1]);
 		if (input[i] < 2 || INT32_MAX < input[i])
-			return (False);
+			return (FALSE);
 		i++;
 	}
-	return (True);
+	return (TRUE);
 }
