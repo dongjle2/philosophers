@@ -6,7 +6,7 @@
 /*   By: dongjle2 <dongjle2@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:00:23 by dongjle2          #+#    #+#             */
-/*   Updated: 2024/11/09 22:30:50 by dongjle2         ###   ########.fr       */
+/*   Updated: 2024/11/09 22:36:46 by dongjle2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,7 @@ void	parse_input(t_input *input, char *argv[])
 	input->tte = ft_atol(argv[3]);
 	input->tts = ft_atol(argv[4]);
 	if (argv[5])
-		input->total_eat = ft_atol(argv[5]) * input->num_philos;
+		input->total_eat = ft_atol(argv[5]) * input->num_philos;	//
 	else
 		input->total_eat = -1;
 }

@@ -6,7 +6,7 @@
 /*   By: dongjle2 <dongjle2@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:00:20 by dongjle2          #+#    #+#             */
-/*   Updated: 2024/11/08 01:05:55 by dongjle2         ###   ########.fr       */
+/*   Updated: 2024/11/09 22:11:19 by dongjle2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,22 @@
 #include <sys/time.h>
 #include <unistd.h>
 
-#define False 0
-#define True 1
+#define FALSE 0
+#define TRUE 1
+
+#define EAT		"is eating"
+#define SLEEP	"is sleeping"
+#define THINK	"is thinking"
+#define DIE		"is died"
+#define FORK	"has taken a fork"
 
 typedef struct	s_input
 {
 	unsigned long	num_philos;
-	unsigned long	ttd;
+	long			ttd;
 	unsigned long	tte;
 	unsigned long	tts;
-	int				total_eat;
+	long			total_eat;
 }				t_input;
 
 typedef struct	s_philos
@@ -87,9 +93,23 @@ int		eat(t_philos *philo);
 void	ft_sleep(t_philos *philo);
 void	think(t_philos *philo);
 void	print_status(t_philos *philo, const char *status);
-void	decrement_total_eat(t_philos *philo);
+
 //main.c
 long	get_time_in_ms();
 
 //sleep.c
 void	ft_usleep(long time_to_sleep);
+
+void	release_forks(t_philos *philo);
+
+//utils_mutex.c
+void	set_death_flag_on(pthread_mutex_t *death_flag_mutex, int *death_flag);
+int		ck_death_flag_on(pthread_mutex_t *death_flag_mutex, int *death_flag);
+int		ck_total_eat_value(pthread_mutex_t *total_eat_mutex, long *total_eat);
+void	decrement_total_eat(pthread_mutex_t *total_eat_mutex, long *total_eat);
+void	print_status(t_philos *philo, const char *status);
+
+//utils_eat.c
+void	take_forks(t_philos *philo);
+void	update_eat_time(t_philos *philo);
+void	release_forks(t_philos *philo);
