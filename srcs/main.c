@@ -6,7 +6,7 @@
 /*   By: dongjle2 <dongjle2@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:00:23 by dongjle2          #+#    #+#             */
-/*   Updated: 2024/11/09 22:36:46 by dongjle2         ###   ########.fr       */
+/*   Updated: 2024/11/10 03:56:03 by dongjle2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ int	mem_alloc(t_resources *rs)
 
 int	validate_input(int argc, char *argv[])
 {
-	return (validate_user_input(argc, argv) && validate_value_range(argv));
+	return (validate_user_input(argc, argv) && validate_value_range(argc, argv));
 }
 
 void	parse_input(t_input *input, char *argv[])

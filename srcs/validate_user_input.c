@@ -6,7 +6,7 @@
 /*   By: dongjle2 <dongjle2@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:17:41 by dongjle2          #+#    #+#             */
-/*   Updated: 2024/11/09 22:26:51 by dongjle2         ###   ########.fr       */
+/*   Updated: 2024/11/10 03:47:24 by dongjle2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	validate_user_input(int argc, char *argv[])
 {
-	printf("%d\n", validate_argv(argv));
+	// printf("%d\n", validate_argv(argv));
 	return (validate_argc(argc) && validate_argv(argv));
 }
 

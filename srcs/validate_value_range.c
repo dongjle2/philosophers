@@ -6,7 +6,7 @@
 /*   By: dongjle2 <dongjle2@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 00:42:14 by dongjle2          #+#    #+#             */
-/*   Updated: 2024/11/09 22:13:22 by dongjle2         ###   ########.fr       */
+/*   Updated: 2024/11/10 03:58:37 by dongjle2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 unsigned long	ft_atol(char *s)
 {
-	long	ret;
+	unsigned long	ret;
 
 	ret = 0;
 	while (*s)
@@ -25,20 +25,15 @@ unsigned long	ft_atol(char *s)
 	return (ret);
 }
 
-int	validate_value_range(char *argv[])
+int	validate_value_range(int argc, char *argv[])
 {
 	long	input[5];
-	int		num_input;
 	int		i;
 
 	i = 0;
-	if (argv[5])
-		num_input = 4;
-	else
-		num_input = 5;
-	while (i < num_input)
+	while (i < argc && argv[i + 1])
 	{
-		input[i] = atol(argv[i + 1]);
+		input[i] = ft_atol(argv[i + 1]);
 		if (input[i] < 2 || INT32_MAX < input[i])
 			return (FALSE);
 		i++;
