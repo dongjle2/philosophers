@@ -12,6 +12,12 @@
 
 #include "../includes/philisophers.h"
 
+void	take_forks_single_philo(t_philos *philo)
+{
+	pthread_mutex_lock(philo->forks[0]);
+	print_status(philo, FORK);
+}
+
 void	take_forks(t_philos *philo)
 {
 	if (philo->num % 2 == 0)

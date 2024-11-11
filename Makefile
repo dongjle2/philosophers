@@ -10,6 +10,8 @@ SRCS = main \
 		validate_value_range \
 		philo_state \
 		sleep \
+		utils_eat \
+		utils_mutex
 
 SRCS := $(addprefix $(SRCS_DIR)/, $(addsuffix .c, $(SRCS)))
 OBJS = $(SRCS:.c=.o)

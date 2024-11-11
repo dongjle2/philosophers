@@ -6,7 +6,7 @@
 /*   By: dongjle2 <dongjle2@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:00:23 by dongjle2          #+#    #+#             */
-/*   Updated: 2024/11/10 03:56:03 by dongjle2         ###   ########.fr       */
+/*   Updated: 2024/11/11 18:55:09 by dongjle2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,15 @@ int	main(int argc, char *argv[])
 		i++;
 	}
 	pthread_join(monitor.monitor_thread, NULL);
+	free_mem_alloc(&rs);
 	return (0);
+}
+
+void	free_mem_alloc(t_resources *rs)
+{
+	free(rs->thread);
+	free(rs->philos);
+	free(rs->forks);
 }
 
 void	*monitor_routine(void *arg)
@@ -62,6 +70,25 @@ void	*monitor_routine(void *arg)
 	}
 }
 
+void	*single_philo_routine(void *arg)
+{
+	t_philos	*cur;
+
+	cur = (t_philos *)arg;
+
+	pthread_mutex_lock(cur->death_flag_mutex);
+	if (*cur->death_flag)
+	{
+		pthread_mutex_unlock(cur->death_flag_mutex);
+		pthread_mutex_unlock(cur->forks[0]);
+		return (FALSE);
+	}
+	pthread_mutex_unlock(cur->death_flag_mutex);
+	take_forks_single_philo(cur);
+	pthread_mutex_unlock(cur->forks[0]);
+	return (NULL);
+}
+
 void	*routine(void *arg)
 {
 	t_philos	*cur;
@@ -73,50 +100,70 @@ void	*routine(void *arg)
 			break ;
 		if (!ck_total_eat_value(cur->total_eat_mutex, &cur->input->total_eat))
 			break ;
-		if (!eat(cur))
+		if (!eat_stage(cur))
 			break ;
 		ft_sleep(cur);
 		think(cur);
 	}
 	return (NULL);
 }
-/*
-void	init_philo_data(t_philos *philos, size_t i)
+
+void	init_philo_data(t_resources *rs, size_t i, long start_time)
 {
-	*(philos->total_eat) = 0;
-	philos->start_time = get_time_in_ms();
+	rs->philos[i].num = i;
+	rs->philos[i].input = &rs->input;
+	rs->philos[i].print = rs->print;
+	rs->philos[i].start_time = start_time;
+	rs->philos[i].last_meal_time = start_time;
+	rs->philos[i].total_eat_mutex = &rs->total_eat_mutex;
+	rs->philos[i].death_flag = &rs->death_flag;
+	rs->philos[i].death_flag_mutex = &rs->death_flag_mutex;
 }
-*/
+
+void	init_monitor_thread_data(t_monitor_rs *monitor, t_resources *rs)
+{
+		monitor->death_flag = &rs->death_flag;
+		monitor->death_flag_mutex = &rs->death_flag_mutex;
+		monitor->input = &rs->input;
+		monitor->philos = rs->philos;
+}
+
+void	set_single_philo(t_resources *rs)
+{
+	rs->philos[0].forks[0] = &rs->forks[0];
+}
 
 void	create_threads(t_resources *rs, t_monitor_rs *monitor)
 {
 	size_t	i;
 	long	start_time;
-	
+
 	i = 0;
 	start_time = get_time_in_ms();
 	rs->death_flag = 0;
-	while (i < rs->input.num_philos)
+	if (rs->input.num_philos == 1)
 	{
-		usleep(10);
-		rs->philos[i].num = i;
-		rs->philos[i].forks[1] = &rs->forks[i];
-		rs->philos[i].forks[0] = &rs->forks[(i + 1) % rs->input.num_philos];
-		rs->philos[i].input = &rs->input;
-		rs->philos[i].print = rs->print;
-		rs->philos[i].start_time = start_time;
-		rs->philos[i].last_meal_time = start_time;
-		rs->philos[i].total_eat_mutex = &rs->total_eat_mutex;
-		rs->philos[i].death_flag = &rs->death_flag;
-		rs->philos[i].death_flag_mutex = &rs->death_flag_mutex;
-		pthread_create(&rs->thread[i], NULL, routine, &rs->philos[i]);
-		i++;
+		i = 0;
+		set_single_philo(rs);
+		init_philo_data(rs, i, start_time);
+		pthread_create(&rs->thread[i], NULL, single_philo_routine, &rs->philos[i]);
+		init_monitor_thread_data(monitor, rs);
+		pthread_create(&monitor->monitor_thread, NULL, monitor_routine, monitor);
 	}
-	monitor->death_flag = &rs->death_flag;
-	monitor->death_flag_mutex = &rs->death_flag_mutex;
-	monitor->input = &rs->input;
-	monitor->philos = rs->philos;
-	pthread_create(&monitor->monitor_thread, NULL, monitor_routine, monitor);
+	else
+	{
+		while (i < rs->input.num_philos)
+		{
+			usleep(10);
+			rs->philos[i].forks[0] = &rs->forks[i];
+			rs->philos[i].forks[1] = &rs->forks[(i + 1) % rs->input.num_philos];
+			init_philo_data(rs, i, start_time);
+			pthread_create(&rs->thread[i], NULL, routine, &rs->philos[i]);
+			i++;
+		}
+		init_monitor_thread_data(monitor, rs);
+		pthread_create(&monitor->monitor_thread, NULL, monitor_routine, monitor);
+	}
 }
 
 void	mutex_init(t_resources *rs)

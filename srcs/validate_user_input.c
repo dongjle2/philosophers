@@ -6,7 +6,7 @@
 /*   By: dongjle2 <dongjle2@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:17:41 by dongjle2          #+#    #+#             */
-/*   Updated: 2024/11/10 03:47:24 by dongjle2         ###   ########.fr       */
+/*   Updated: 2024/11/11 17:16:17 by dongjle2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	validate_each_argv(char *arg)
 
 int	validate_argv(char *argv[])
 {
-	size_t i;
+	size_t	i;
 
 	i = 1;
 	while (argv[i])

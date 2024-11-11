@@ -6,7 +6,7 @@
 /*   By: dongjle2 <dongjle2@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:00:20 by dongjle2          #+#    #+#             */
-/*   Updated: 2024/11/09 22:11:19 by dongjle2         ###   ########.fr       */
+/*   Updated: 2024/11/11 19:00:17 by dongjle2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int		validate_argv(char *argv[]);
 int		ft_isnum(char c);
 
 //validate_value_range.c
-int		validate_value_range(char *argv[]);
+int		validate_value_range(int argc, char *argv[]);
 unsigned long	ft_atol(char *s);
 
 void	mutex_init(t_resources *rs);
@@ -88,8 +88,7 @@ void	create_threads(t_resources *rs, t_monitor_rs *monitor);
 int		validate_input(int argc, char *argv[]);
 
 //philo_state.c
-void 	(*print_log)(void);
-int		eat(t_philos *philo);
+int		eat_stage(t_philos *philo);
 void	ft_sleep(t_philos *philo);
 void	think(t_philos *philo);
 void	print_status(t_philos *philo, const char *status);
@@ -100,8 +99,6 @@ long	get_time_in_ms();
 //sleep.c
 void	ft_usleep(long time_to_sleep);
 
-void	release_forks(t_philos *philo);
-
 //utils_mutex.c
 void	set_death_flag_on(pthread_mutex_t *death_flag_mutex, int *death_flag);
 int		ck_death_flag_on(pthread_mutex_t *death_flag_mutex, int *death_flag);
@@ -111,5 +108,9 @@ void	print_status(t_philos *philo, const char *status);
 
 //utils_eat.c
 void	take_forks(t_philos *philo);
+void	take_forks_single_philo(t_philos *philo);
 void	update_eat_time(t_philos *philo);
 void	release_forks(t_philos *philo);
+void	release_forks_single_philo(t_philos *philo);
+
+void	free_mem_alloc(t_resources *rs);
