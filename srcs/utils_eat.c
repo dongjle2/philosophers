@@ -12,13 +12,13 @@
 
 #include "../includes/philisophers.h"
 
-void	take_forks_single_philo(t_philos *philo)
+void	take_forks_single_philo(t_philos_data *philo)
 {
 	pthread_mutex_lock(philo->forks[0]);
 	print_status(philo, FORK);
 }
 
-void	take_forks(t_philos *philo)
+void	take_forks(t_philos_data *philo)
 {
 	if (philo->num % 2 == 0)
 	{
@@ -36,12 +36,12 @@ void	take_forks(t_philos *philo)
 	}
 }
 
-void	update_eat_time(t_philos *philo)
+void	update_eat_time(t_philos_data *philo)
 {
 	philo->last_meal_time = get_time_in_ms();
 }
 
-void	release_forks(t_philos *philo)
+void	release_forks(t_philos_data *philo)
 {
 	pthread_mutex_unlock(philo->forks[0]);
 	pthread_mutex_unlock(philo->forks[1]);

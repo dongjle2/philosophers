@@ -6,7 +6,7 @@
 /*   By: dongjle2 <dongjle2@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 22:01:36 by dongjle2          #+#    #+#             */
-/*   Updated: 2024/11/09 22:10:09 by dongjle2         ###   ########.fr       */
+/*   Updated: 2024/11/11 19:22:04 by dongjle2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	decrement_total_eat(pthread_mutex_t *total_eat_mutex, long *total_eat)
 	pthread_mutex_unlock(total_eat_mutex);
 }
 
-void	print_status(t_philos *philo, const char *status)
+void	print_status(t_philos_data *philo, const char *status)
 {
 	pthread_mutex_lock(philo->death_flag_mutex);
 	if (*philo->death_flag == 0)

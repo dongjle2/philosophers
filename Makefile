@@ -11,7 +11,8 @@ SRCS = main \
 		philo_state \
 		sleep \
 		utils_eat \
-		utils_mutex
+		utils_mutex \
+		resources \
 
 SRCS := $(addprefix $(SRCS_DIR)/, $(addsuffix .c, $(SRCS)))
 OBJS = $(SRCS:.c=.o)
