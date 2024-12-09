@@ -6,7 +6,7 @@
 /*   By: dongjle2 <dongjle2@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 22:01:36 by dongjle2          #+#    #+#             */
-/*   Updated: 2024/11/11 19:22:04 by dongjle2         ###   ########.fr       */
+/*   Updated: 2024/12/09 15:09:03 by dongjle2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ void	print_status(t_philos_data *philo, const char *status)
 	if (*philo->death_flag == 0)
 	{
 		pthread_mutex_lock(&philo->print);
-		printf("%lu %zu %s\n", get_time_in_ms() - philo->start_time, philo->num, status);
+		printf("%lu %zu %s\n", get_time_in_ms() - philo->start_time, \
+				philo->num, status);
 		pthread_mutex_unlock(&philo->print);
 	}
 	pthread_mutex_unlock(philo->death_flag_mutex);
