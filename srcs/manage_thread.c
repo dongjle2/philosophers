@@ -6,11 +6,11 @@
 /*   By: dongjle2 <dongjle2@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 22:20:01 by dongjle2          #+#    #+#             */
-/*   Updated: 2024/12/12 16:22:13 by dongjle2         ###   ########.fr       */
+/*   Updated: 2024/12/12 20:15:14 by dongjle2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philisophers.h"
+#include "../includes/philosophers.h"
 
 int	join_threads(t_resources *rs, t_monitor_rs *monitor)
 {

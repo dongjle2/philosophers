@@ -6,11 +6,11 @@
 /*   By: dongjle2 <dongjle2@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 23:01:14 by dongjle2          #+#    #+#             */
-/*   Updated: 2024/12/12 19:35:06 by dongjle2         ###   ########.fr       */
+/*   Updated: 2024/12/12 20:15:07 by dongjle2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philisophers.h"
+#include "../includes/philosophers.h"
 
 int	eat_stage(t_philos_data *philo)
 {

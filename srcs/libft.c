@@ -6,11 +6,11 @@
 /*   By: dongjle2 <dongjle2@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 20:22:29 by dongjle2          #+#    #+#             */
-/*   Updated: 2024/11/13 23:39:45 by dongjle2         ###   ########.fr       */
+/*   Updated: 2024/12/12 20:15:20 by dongjle2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philisophers.h"
+#include "../includes/philosophers.h"
 
 void	*ft_calloc(size_t count, size_t size)
 {

@@ -6,11 +6,11 @@
 /*   By: dongjle2 <dongjle2@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 21:44:14 by dongjle2          #+#    #+#             */
-/*   Updated: 2024/12/12 19:34:37 by dongjle2         ###   ########.fr       */
+/*   Updated: 2024/12/12 20:14:49 by dongjle2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philisophers.h"
+#include "../includes/philosophers.h"
 
 long	ck_last_meal_time(t_monitor_rs *monitor, size_t i)
 {

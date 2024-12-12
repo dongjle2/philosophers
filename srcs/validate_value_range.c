@@ -6,11 +6,11 @@
 /*   By: dongjle2 <dongjle2@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 00:42:14 by dongjle2          #+#    #+#             */
-/*   Updated: 2024/11/11 00:37:56 by dongjle2         ###   ########.fr       */
+/*   Updated: 2024/12/12 20:15:25 by dongjle2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philisophers.h"
+#include "../includes/philosophers.h"
 
 unsigned long	ft_atol(char *s)
 {

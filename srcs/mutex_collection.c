@@ -6,11 +6,11 @@
 /*   By: dongjle2 <dongjle2@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 21:36:10 by dongjle2          #+#    #+#             */
-/*   Updated: 2024/12/12 16:22:21 by dongjle2         ###   ########.fr       */
+/*   Updated: 2024/12/12 20:15:11 by dongjle2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philisophers.h"
+#include "../includes/philosophers.h"
 
 void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
 {

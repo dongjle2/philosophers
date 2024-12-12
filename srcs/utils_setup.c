@@ -6,11 +6,11 @@
 /*   By: dongjle2 <dongjle2@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 00:02:19 by dongjle2          #+#    #+#             */
-/*   Updated: 2024/12/12 16:23:20 by dongjle2         ###   ########.fr       */
+/*   Updated: 2024/12/12 20:14:39 by dongjle2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philisophers.h"
+#include "../includes/philosophers.h"
 
 void	setup_philo_data(t_resources *rs, size_t i, long start_time)
 {

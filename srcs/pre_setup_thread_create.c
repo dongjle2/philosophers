@@ -6,11 +6,11 @@
 /*   By: dongjle2 <dongjle2@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 21:40:20 by dongjle2          #+#    #+#             */
-/*   Updated: 2024/12/12 16:23:30 by dongjle2         ###   ########.fr       */
+/*   Updated: 2024/12/12 20:15:02 by dongjle2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philisophers.h"
+#include "../includes/philosophers.h"
 
 void	setup_single_philo(t_resources *rs, long start_time)
 {
