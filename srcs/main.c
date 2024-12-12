@@ -6,11 +6,11 @@
 /*   By: dongjle2 <dongjle2@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:00:23 by dongjle2          #+#    #+#             */
-/*   Updated: 2024/12/12 19:19:21 by dongjle2         ###   ########.fr       */
+/*   Updated: 2024/12/12 20:13:32 by dongjle2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philisophers.h"
+#include "../includes/philosophers.h"
 
 //./philo [# of philo] [ttd] [tte] [tts] (# each philo eats)
 int	main(int argc, char *argv[])
