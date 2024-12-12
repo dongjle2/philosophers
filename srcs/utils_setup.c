@@ -6,7 +6,7 @@
 /*   By: dongjle2 <dongjle2@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 00:02:19 by dongjle2          #+#    #+#             */
-/*   Updated: 2024/11/17 01:29:53 by dongjle2         ###   ########.fr       */
+/*   Updated: 2024/12/12 16:23:20 by dongjle2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@ void	setup_philo_data(t_resources *rs, size_t i, long start_time)
 	rs->philos_data[i].num = i;
 	rs->philos_data[i].input = &rs->input;
 	rs->philos_data[i].print = rs->print;
+	rs->philos_data[i].forks = rs->forks;
 	rs->philos_data[i].start_time = start_time;
 	rs->philos_data[i].last_meal_time = start_time;
+	rs->philos_data[i].last_meal_time_mutex = &rs->last_meal_time_mutex;
 	rs->philos_data[i].total_eat_mutex = &rs->total_eat_mutex;
 	rs->philos_data[i].death_flag = &rs->death_flag;
 	rs->philos_data[i].death_flag_mutex = &rs->death_flag_mutex;

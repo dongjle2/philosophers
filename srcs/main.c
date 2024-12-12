@@ -6,7 +6,7 @@
 /*   By: dongjle2 <dongjle2@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:00:23 by dongjle2          #+#    #+#             */
-/*   Updated: 2024/11/17 01:26:01 by dongjle2         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:19:21 by dongjle2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ int	main(int argc, char *argv[])
 		return (1);
 	if (join_threads(&rs, &monitor) == FALSE)
 		return (1);
-	usleep(100);
+	ft_usleep(10);
 	mutex_collection_destroy(&rs.mutex_collect);
-	free_mem_alloc(&rs, 4);
+	free_mem_alloc(&rs, 5);
 	return (0);
 }
 

@@ -6,26 +6,26 @@
 /*   By: dongjle2 <dongjle2@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 23:00:20 by dongjle2          #+#    #+#             */
-/*   Updated: 2024/11/17 01:29:47 by dongjle2         ###   ########.fr       */
+/*   Updated: 2024/12/12 20:04:09 by dongjle2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <pthread.h>
-#include <sys/time.h>
-#include <unistd.h>
-#include <string.h>
-
-#define FALSE 0
-#define TRUE 1
-#define INIT_CAPACITY 1
-
-#define EAT		"is eating"
-#define SLEEP	"is sleeping"
-#define THINK	"is thinking"
-#define DIE		"is died"
-#define FORK	"has taken a fork"
+#ifndef PHILOSOPHERS_H
+# define PHILOSOPHERS_H
+# include <stdio.h>
+# include <stdlib.h>
+# include <pthread.h>
+# include <sys/time.h>
+# include <unistd.h>
+# include <string.h>
+# define FALSE 0
+# define TRUE 1
+# define INIT_CAPACITY 50
+# define EAT		"is eating"
+# define SLEEP	"is sleeping"
+# define THINK	"is thinking"
+# define DIE		"died"
+# define FORK	"has taken a fork"
 
 typedef struct s_input
 {
@@ -39,7 +39,7 @@ typedef struct s_input
 typedef struct s_philos_data
 {
 	size_t			num;
-	pthread_mutex_t	*forks[2];
+	pthread_mutex_t	*forks;
 	pthread_mutex_t	print;
 	t_input			*input;
 	long			start_time;
@@ -47,6 +47,7 @@ typedef struct s_philos_data
 	int				*death_flag;
 	pthread_mutex_t	*total_eat_mutex;
 	pthread_mutex_t	*death_flag_mutex;
+	pthread_mutex_t	*last_meal_time_mutex;
 }				t_philos_data;
 
 typedef struct s_monitor_rs
@@ -75,6 +76,7 @@ typedef struct s_resources
 	int					death_flag;
 	pthread_mutex_t		death_flag_mutex;
 	pthread_mutex_t		total_eat_mutex;
+	pthread_mutex_t		last_meal_time_mutex;
 	t_mutex_collection	mutex_collect;
 }				t_resources;
 
@@ -125,7 +127,7 @@ void			decrement_total_eat(pthread_mutex_t *total_eat_mutex, \
 void			print_status(t_philos_data *philo, const char *status);
 
 //utils_eat.c
-void			take_forks(t_philos_data *philo);
+int				take_forks(t_philos_data *philo);
 void			take_forks_single_philo(t_philos_data *philo);
 void			update_eat_time(t_philos_data *philo);
 void			release_forks(t_philos_data *philo);
@@ -165,3 +167,4 @@ void			*ft_realloc(void *ptr, size_t old_size, size_t new_size);
 int				mutex_collection_add(t_mutex_collection *array, \
 				pthread_mutex_t *mutex);
 int				mutex_collection_destroy(t_mutex_collection *collection);
+#endif

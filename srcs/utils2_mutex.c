@@ -6,7 +6,7 @@
 /*   By: dongjle2 <dongjle2@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 00:04:20 by dongjle2          #+#    #+#             */
-/*   Updated: 2024/11/15 00:10:43 by dongjle2         ###   ########.fr       */
+/*   Updated: 2024/12/12 16:24:20 by dongjle2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,9 @@ int	mutex_init(t_resources *rs)
 	if (init_and_add_mutex(&rs->total_eat_mutex, &rs->mutex_collect) == FALSE)
 		return (FALSE);
 	if (init_and_add_mutex(&rs->death_flag_mutex, &rs->mutex_collect) == FALSE)
+		return (FALSE);
+	if (init_and_add_mutex(&rs->last_meal_time_mutex, \
+							&rs->mutex_collect) == FALSE)
 		return (FALSE);
 	return (TRUE);
 }

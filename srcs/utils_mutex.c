@@ -6,11 +6,11 @@
 /*   By: dongjle2 <dongjle2@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 22:01:36 by dongjle2          #+#    #+#             */
-/*   Updated: 2024/12/09 15:09:03 by dongjle2         ###   ########.fr       */
+/*   Updated: 2024/12/12 20:05:31 by dongjle2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philisophers.h"
+#include "../includes/philosophers.h"
 
 void	set_death_flag_on(pthread_mutex_t *death_flag_mutex, int *death_flag)
 {
@@ -47,10 +47,9 @@ void	decrement_total_eat(pthread_mutex_t *total_eat_mutex, long *total_eat)
 {
 	pthread_mutex_lock(total_eat_mutex);
 	if (*total_eat > 0)
-	{
 		(*total_eat)--;
-	}
 	pthread_mutex_unlock(total_eat_mutex);
+	return ;
 }
 
 void	print_status(t_philos_data *philo, const char *status)
@@ -58,10 +57,12 @@ void	print_status(t_philos_data *philo, const char *status)
 	pthread_mutex_lock(philo->death_flag_mutex);
 	if (*philo->death_flag == 0)
 	{
+		pthread_mutex_unlock(philo->death_flag_mutex);
 		pthread_mutex_lock(&philo->print);
 		printf("%lu %zu %s\n", get_time_in_ms() - philo->start_time, \
-				philo->num, status);
+				philo->num + 1, status);
 		pthread_mutex_unlock(&philo->print);
+		return ;
 	}
 	pthread_mutex_unlock(philo->death_flag_mutex);
 }
