@@ -6,11 +6,11 @@
 /*   By: dongjle2 <dongjle2@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 00:04:20 by dongjle2          #+#    #+#             */
-/*   Updated: 2024/12/12 16:24:20 by dongjle2         ###   ########.fr       */
+/*   Updated: 2024/12/12 20:17:08 by dongjle2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philisophers.h"
+#include "../includes/philosophers.h"
 
 int	mutex_init_lib_wrapper(pthread_mutex_t *mutex)
 {
